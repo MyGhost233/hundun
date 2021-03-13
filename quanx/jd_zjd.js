@@ -3,7 +3,7 @@
  * @Github: https://github.com/whyour
  * @Date: 2020-11-23 11:30:44
  * @LastEditors: whyour
- * @LastEditTime: 2021-02-03 23:56:43
+ * @LastEditTime: 2021-02-27 19:32:13
   半自动领小程序 赚京豆 中的步数领京豆, 建议定时放在步数达到2万以后，然后手动进入一次赚京豆小程序
   quanx:
   [task_local]
@@ -68,7 +68,7 @@ function getCookies() {
 
 function exchangeJd(i) {
   return new Promise((resolve) => {
-    $.get(
+    $.post(
       taskUrl("swat_game_exchangejingbean"),
       async (err, resp, _data) => {
         try {
@@ -94,7 +94,7 @@ function showMsg() {
 
 function taskUrl(function_path, body = {}) {
   return {
-    url: `${JD_API_HOST}?functionId=${function_path}&appid=swat_miniprogram&body=POST&client=tjj_m&screen=1920*1080&osVersion=5.0.0&networkType=wifi&sdkName=orderDetail&sdkVersion=1.0.0&clientVersion=3.1.3&area=11&fromType=wxapp&timestamp=${Date.now()}`,
+    url: `${JD_API_HOST}?functionId=${function_path}&fromType=wxapp&timestamp=${Date.now()}`,
     headers: {
       Cookie: $.currentCookie,
       Host: `api.m.jd.com`,
@@ -102,7 +102,8 @@ function taskUrl(function_path, body = {}) {
       Referer: `https://servicewechat.com/wxa5bf5ee667d91626/110/page-frame.html`,
       "Accept-Language": `zh-cn`,
       "Accept-Encoding": `gzip, deflate, br`,
-    }
+    },
+    body: `body=${JSON.stringify(body)}&appid=swat_miniprogram&body=POST&client=tjj_m&screen=1920*1080&osVersion=5.0.0&networkType=wifi&sdkName=orderDetail&sdkVersion=1.0.0&clientVersion=3.1.3&area=11`
   };
 }
 
